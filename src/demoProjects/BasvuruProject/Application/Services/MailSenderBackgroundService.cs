@@ -66,7 +66,6 @@ namespace Application.Services
                     {
                         product += order.Product.Name;
                         price += order.Product.UnitPrice;
-                        
 
                     }
                     //TODO
@@ -76,7 +75,7 @@ namespace Application.Services
 
                     var channel = connection.CreateModel();
                     channel.QueueDeclare("mesaj kuyruk", true, false, false);
-                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir", product,"\nsipariş fiyatı:",price,"Bizi Tercih ettiğiniz için teşekkür  ederiz");
+                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir<br>", product,"<br>sipariş fiyatı:",price.ToString("F2"),"Bizi Tercih ettiğiniz için teşekkür  ederiz");
                     var message = Encoding.UTF8.GetBytes(mesaj);
                     channel.BasicPublish(String.Empty,"mesaj",null,message);
                     _mailService.SendEmailAsync(new MailRequest() { Body = mesaj, Subject = "Siparişiniz alındı", ToEmail = item.CustomerMail });
