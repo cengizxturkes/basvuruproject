@@ -17,6 +17,7 @@ using MimeKit.Text;
 using Org.BouncyCastle.Asn1.Ocsp;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Microsoft.Extensions.Configuration;
+using Application.Services.Mail;
 
 namespace Application.Services
 {
@@ -80,19 +81,6 @@ namespace Application.Services
      
         }
     }
-    public class MailSettings
-    {
-        public string Mail { get; set; }
-        public string DisplayName { get; set; }
-        public string Password { get; set; }
-        public string Host { get; set; }
-        public int Port { get; set; }
-    }
-    public class MailRequest
-    {
-        public string ToEmail { get; set; }
-        public string Subject { get; set; }
-        public string Body { get; set; }
-        public List<IFormFile> Attachments { get; set; }
-    }
+  
+    
 }

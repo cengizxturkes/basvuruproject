@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Core.Application.Pipelines.Logging;
 using Application.Services;
+using Application.Services.Mail;
 
 var builder = WebApplication.CreateBuilder(args); 
 // Add services to the container.

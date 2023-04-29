@@ -1,4 +1,5 @@
-﻿using Core.Application.Pipelines.Logging;
+﻿using Application.Services.Mail;
+using Core.Application.Pipelines.Logging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
