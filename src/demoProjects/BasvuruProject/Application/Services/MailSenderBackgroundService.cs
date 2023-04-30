@@ -69,16 +69,19 @@ namespace Application.Services
 
                     }
                     //TODO
+                   
+                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir :<br /> ", product,"<br>sipariş fiyatı:",price.ToString("F2"),"Bizi Tercih ettiğiniz için teşekkür  ederiz");
+                    
+                    _mailService.SendEmailAsync(new MailRequest() { Body = mesaj, Subject = "Siparişiniz alındı", ToEmail = item.CustomerMail });
+                    var message = Encoding.UTF8.GetBytes(mesaj);
                     var factory = new ConnectionFactory();
                     factory.Uri = new Uri("amqps://yeaixqmp:RmmVEHoOcK-G6tcoj0fuillwq5uyiaF7@cow.rmq2.cloudamqp.com/yeaixqmp");
                     var connection = factory.CreateConnection();
 
                     var channel = connection.CreateModel();
                     channel.QueueDeclare("mesaj kuyruk", true, false, false);
-                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir<br>", product,"<br>sipariş fiyatı:",price.ToString("F2"),"Bizi Tercih ettiğiniz için teşekkür  ederiz");
-                    var message = Encoding.UTF8.GetBytes(mesaj);
+
                     channel.BasicPublish(String.Empty,"mesaj",null,message);
-                    _mailService.SendEmailAsync(new MailRequest() { Body = mesaj, Subject = "Siparişiniz alındı", ToEmail = item.CustomerMail });
 
                 }
                 _orders.Clear();

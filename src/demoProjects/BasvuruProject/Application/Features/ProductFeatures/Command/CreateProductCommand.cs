@@ -27,13 +27,14 @@ namespace Application.Features.ProductFeatures.Command
 
 
 
-        public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,ProductDto>
+        public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
         {
             private readonly IProductRepository _productRepository;
 
             private readonly IMapper _mapper;
 
-            public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper) { 
+            public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
+            {
                 _productRepository = productRepository;
                 _mapper = mapper;
             }

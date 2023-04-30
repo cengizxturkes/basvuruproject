@@ -7,11 +7,13 @@ using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
 using Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Application.Features.ProductFeatures.Queries.GetById;
 
 namespace Application.Features.ProductFeatures.Profiles
 {
@@ -25,7 +27,6 @@ namespace Application.Features.ProductFeatures.Profiles
             CreateMap<Product, CreateProductCommand>().ReverseMap();
             CreateMap<Product, GetById>().ReverseMap();
             CreateMap<Product, ProductGetByIdDto>().ReverseMap();
-
         }
     }
 }
