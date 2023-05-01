@@ -8,12 +8,12 @@ namespace WebAPI.Controllers
     [ApiController]
     public class OrderItemsController : BaseController
     {
-        [HttpPost("add")]
-        public async Task<IActionResult> AddAsync([FromBody] CreateOrderItemCommand createOrderItemCommand)
-        {
-            var result = await Mediator.Send(createOrderItemCommand);
-            return Ok(result);
+        //[HttpPost("add")]
+        //public async Task<IActionResult> AddAsync([FromBody] CreateOrderItemCommand createOrderItemCommand)
+        //{
+        //    var result = await Mediator.Send(createOrderItemCommand);
+        //    return Ok(result);
 
-        }
+        //}
     }
 }

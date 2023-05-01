@@ -56,23 +56,33 @@ namespace Application.Services
                     "Timed Hosted Service is working. Count: {Count}", _orders.Count);
 
 
-               
 
-                foreach (var item in _orders)
-                { 
-                    string product = "\n";
-                    decimal price = 0;
+
+                string product = "<br />";
+                decimal price = 0;
+
+                if (_orders.Count > 0)
+                {
+                    var firstOrder = _orders.First();
+                    product = "<br />";
+                    price = 0;
+
                     foreach (var order in _ordersi)
                     {
-                        product += order.Product.Name;
+                        product += order.Product.Name + "<br />";
                         price += order.Product.UnitPrice;
-
                     }
+
                     //TODO
-                   
-                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir :<br /> ", product,"<br>sipariş fiyatı:",price.ToString("F2"),"Bizi Tercih ettiğiniz için teşekkür  ederiz");
-                    
-                    _mailService.SendEmailAsync(new MailRequest() { Body = mesaj, Subject = "Siparişiniz alındı", ToEmail = item.CustomerMail });
+                    if (_ordersi == null)
+                    {
+                        _orders.Clear();
+                    }
+
+                    string mesaj = String.Concat("Siparişiniz Alındı Siparişinizdeki ürünler Aşağıda Listelenmiştir :<br /> ", product, "sipariş fiyatı:", price.ToString("F2")+"TL", "<br /> Bizi Tercih ettiğiniz için teşekkür  ederiz");
+
+                    _mailService.SendEmailAsync(new MailRequest() { Body = mesaj, Subject = "Siparişiniz alındı", ToEmail = firstOrder.CustomerMail });
+
                     var message = Encoding.UTF8.GetBytes(mesaj);
                     var factory = new ConnectionFactory();
                     factory.Uri = new Uri("amqps://yeaixqmp:RmmVEHoOcK-G6tcoj0fuillwq5uyiaF7@cow.rmq2.cloudamqp.com/yeaixqmp");
@@ -81,11 +91,15 @@ namespace Application.Services
                     var channel = connection.CreateModel();
                     channel.QueueDeclare("mesaj kuyruk", true, false, false);
 
-                    channel.BasicPublish(String.Empty,"mesaj",null,message);
+                    channel.BasicPublish(String.Empty, "mesaj", null, message);
 
+                    _orders.Clear();
                 }
-                _orders.Clear();
+
+
+
             }
+          
         }
 
         public Task StopAsync(CancellationToken stoppingToken)

@@ -66,6 +66,7 @@ namespace Application.Features.OrderFeatures.Commands
                 {
                     OrderItem mappedOrderItem = _mapper.Map<OrderItem>(item);
                     mappedOrderItem.OrderID=createdOrder.Id;
+                    
                     await _orderItemsRepository.AddAsync(mappedOrderItem);
                     mappedOrderItem.Product = _productRepository.Get(x => x.Id == item.ProductID);
                     createdOrderDto.OrderItems.Append(_mapper.Map<OrderItemDto>(mappedOrderItem));
